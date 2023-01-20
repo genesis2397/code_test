@@ -2181,4 +2181,17 @@ class BookingRepository extends BaseRepository
         return sprintf($format, $hours, $minutes);
     }
 
+    public function getIndexForUsers(Request $request)
+    {
+	    if($user_id = $request->get('user_id')) {
+
+            $this->getUsersJobs($user_id);
+
+        }
+        elseif($request->__authenticatedUser->user_type == env('ADMIN_ROLE_ID') || $request->__authenticatedUser->user_type == env('SUPERADMIN_ROLE_ID'))
+        {
+            $this->getAll($request);
+        }
+    }
+
 }
